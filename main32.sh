@@ -34,4 +34,5 @@ DIST=lunar ARCH=i386 pbuilder build ./*.dsc --distribution lunar --architecture 
 
 # Move the debs to output
 mkdir -p ./output
+rm -rfv /var/cache/pbuilder/result/*all.deb
 mv /var/cache/pbuilder/result/*.deb ./output/ || sudo mv ../*.deb ./output/
