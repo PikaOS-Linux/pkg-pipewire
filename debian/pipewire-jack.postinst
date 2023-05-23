@@ -1,0 +1,16 @@
+#!/bin/sh 
+# pipewire-jack.postinst, runs ldconfig 
+set -e 
+ 
+#DEBHELPER#
+
+case "$1" in 
+       configure) 
+               ldconfig 
+               ;; 
+       #abort-upgrade|abort-remove|abort-deconfigure) 
+	       *)
+               ;; 
+esac 
+ 
+ 

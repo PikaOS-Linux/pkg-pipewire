@@ -1,0 +1,23 @@
+Index: pipewire_0.3.40.r59.g1b06d4d/src/daemon/systemd/user/pipewire.service.in
+===================================================================
+--- pipewire_0.3.40.r59.g1b06d4d.orig/src/daemon/systemd/user/pipewire.service.in	2021-11-27 10:02:22.000000000 +0530
++++ pipewire_0.3.40.r59.g1b06d4d/src/daemon/systemd/user/pipewire.service.in	2021-11-27 16:14:14.318874802 +0530
+@@ -14,6 +14,7 @@
+ # After=pipewire.socket is not needed, as it is already implicit in the
+ # socket-service relationship, see systemd.socket(5).
+ Requires=pipewire.socket
++ConditionUser=!root
+ 
+ [Service]
+ LockPersonality=yes
+Index: pipewire_0.3.40.r59.g1b06d4d/src/daemon/systemd/user/pipewire.socket
+===================================================================
+--- pipewire_0.3.40.r59.g1b06d4d.orig/src/daemon/systemd/user/pipewire.socket	2021-11-27 10:02:22.000000000 +0530
++++ pipewire_0.3.40.r59.g1b06d4d/src/daemon/systemd/user/pipewire.socket	2021-11-27 16:14:50.098999745 +0530
+@@ -1,5 +1,6 @@
+ [Unit]
+ Description=PipeWire Multimedia System Socket
++ConditionUser=!root
+ 
+ [Socket]
+ Priority=6

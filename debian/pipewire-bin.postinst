@@ -1,0 +1,45 @@
+#!/bin/sh 
+
+set -e 
+
+#DEBHELPER#
+
+
+############# Showing changelogs and Message ############# 
+
+case "$1" in 
+
+  configure) 
+
+cat << EOF
+
+
+pipewire 0.3.71-1 (https://pipewire-debian.github.io)
+ 
+
+  Debian Package - 
+
+	- enable modemmanager
+
+  Pipewire -
+
+    - For more : https://gitlab.freedesktop.org/pipewire/pipewire/-/releases
+  .
+
+Troubleshooting - 
+
+  - Have any package regarding issue? report on github :
+    https://github.com/pipewire-debian/pipewire-debian/issues/new/choose
+
+  - Upstream recommends to use 'WirePlumber' instead 'pipewire-media-session'      
+    as session manager, to get it add another PPA,      
+    'sudo add-apt-repository ppa:pipewire-debian/wireplumber-upstream'      
+    For more instruction read : https://pipewire-debian.github.io      
+
+  
+
+EOF
+  ;; 
+
+esac 
+

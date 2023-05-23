@@ -1,0 +1,2 @@
+#echo "deb [trusted=yes] https://ppa.pika-os.com/ lunar main" >> /etc/apt/sources.list
+apt-get update

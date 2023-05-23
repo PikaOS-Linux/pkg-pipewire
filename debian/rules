@@ -1,0 +1,170 @@
+#!/usr/bin/make -f 
+
+include /usr/share/dpkg/architecture.mk
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,-z,defs -Wl,--as-needed
+
+
+%:
+	dh $@
+
+
+VERSION_CODENAME=$(shell sed -ne '/VERSION_CODENAME/p' /etc/os-release | cut -d"=" -f2)
+
+LTO_NON_SUPPORTED_VERSION_CODENAME=focal bionic
+ROC_NON_SUPPORTED_VERSION_CODENAME=kinetic
+LIBLC3_NON_SUPPORTED_VERSION_CODENAME=focal bionic
+COMPRESS_OFFLOAD_NON_SUPPORTED_VERSION_CODENAME=focal bionic
+
+############################## Disabling Features Conditionally ##############################
+
+ifneq (,$(filter s390x hppa i386 i686 m68k powerpc ppc64 ppc64el sparc64,$(DEB_HOST_ARCH)))
+LIBCAMERA=disabled
+cmnt_libcam=$(shell sed -e '/libcamera/ s/^\#*/\#/' -i debian/pipewire-libcamera.install)
+else
+LIBCAMERA=enabled
+endif
+
+ifneq (,$(filter s390x hppa m68k powerpc ppc64 sparc64,$(DEB_HOST_ARCH)))
+BLUEZ5_CODEC_LDAC=disabled
+else
+BLUEZ5_CODEC_LDAC=enabled
+endif
+
+ifneq (,$(filter hppa i386 i686 m68k powerpc sparc64,$(DEB_HOST_ARCH)))
+LIBROC=disabled
+cmnt_libroc=$(shell sed -e '/module-roc-s/ s/^\#*/\#/' -i debian/libpipewire-0.3-modules.install)
+else
+LIBROC=enabled
+endif
+
+ifneq (,$(filter hppa i386 i686 m68k powerpc sparc64,$(DEB_HOST_ARCH)))
+APTX=disabled
+else
+APTX=enabled
+endif
+
+ifneq (,$(filter hppa i386 i686 m68k powerpc sparc64,$(DEB_HOST_ARCH)))
+AAC=disabled
+else
+AAC=enabled
+endif
+
+
+LTO=true
+
+ifneq (,$(filter armhf,$(DEB_HOST_ARCH)))
+ifneq (,$(filter ${VERSION_CODENAME},${LTO_NON_SUPPORTED_VERSION_CODENAME}))
+LTO=false
+endif
+endif
+
+ifneq (,$(filter ${VERSION_CODENAME},${ROC_NON_SUPPORTED_VERSION_CODENAME}))
+ifneq (,$(filter arm64,$(DEB_HOST_ARCH)))
+LIBROC=disabled
+cmnt_libroc=$(shell sed -e '/module-roc-s/ s/^\#*/\#/' -i debian/libpipewire-0.3-modules.install)
+endif
+endif
+
+LIBLC3=enabled
+
+ifneq (,$(filter ${VERSION_CODENAME},${LIBLC3_NON_SUPPORTED_VERSION_CODENAME}))
+ifneq (,$(filter armhf,$(DEB_HOST_ARCH)))
+LIBLC3=disabled
+endif
+endif
+
+ifneq (,$(filter jammy kinetic,${VERSION_CODENAME}))
+ifneq (,$(filter i386,$(DEB_HOST_ARCH)))
+LIBLC3=disabled
+endif
+endif
+
+COMPRESS_OFFLOAD=enabled
+ifneq (,$(filter ${VERSION_CODENAME},${COMPRESS_OFFLOAD_NON_SUPPORTED_VERSION_CODENAME}))
+COMPRESS_OFFLOAD=disabled
+endif
+ifneq (,$(filter jammy kinetic,${VERSION_CODENAME}))
+ifneq (,$(filter i386,$(DEB_HOST_ARCH)))
+COMPRESS_OFFLOAD=disabled
+endif
+endif
+
+############################## END OF Disabling Features Conditionally ##############################
+
+AVAILABLE_CORE=$(shell nproc)
+
+
+
+override_dh_auto_configure:
+	dh_auto_configure -- --buildtype=plain \
+		-Daudiotestsrc=enabled \
+		-Dauto_features=enabled \
+		-Db_lto=$(LTO) \
+		-Db_pie=true \
+		-Dbluez5-codec-lc3plus=disabled \
+		-Dbluez5-codec-lc3=$(LIBLC3) \
+		-Dbluez5-codec-ldac=$(BLUEZ5_CODEC_LDAC) \
+		-Dbluez5-codec-aptx=$(APTX) \
+		-Dbluez5-codec-aac=$(AAC) \
+		-Dcompress-offload=$(COMPRESS_OFFLOAD) \
+		-Dlibcamera=$(LIBCAMERA) \
+		-Ddocs=enabled \
+		-Dbluez5-backend-native-mm=enabled \
+		-Dexamples=enabled \
+		-Dinstalled_tests=enabled \
+		-Dman=enabled \
+		-Dtest=enabled \
+		-Dvideotestsrc=enabled \
+		-Dvolume=enabled \
+		-Dvulkan=enabled \
+		-Droc=$(LIBROC) \
+		-Dsession-managers= \
+		$(NULL)
+	install -d debian/ld.so.conf.d
+	echo "/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-0.3/jack/" > debian/ld.so.conf.d/pipewire-jack-$(DEB_HOST_MULTIARCH).conf
+	install -Dm644 /dev/null debian/with-alsa
+	echo -e "\nCommenting out Disabled feature not to be installed...$(cmnt_libcam) $(cmnt_libroc)\n"
+
+
+test_timeout_multiplier = 1
+
+ifneq ($(filter arm hppa ia64 m68k riscv64 sh4 sparc%,$(DEB_HOST_ARCH_CPU)),)
+test_timeout_multiplier = 5
+endif
+
+ifneq ($(filter mips%,$(DEB_HOST_ARCH_CPU)),)
+test_timeout_multiplier = 10
+endif
+
+
+
+override_dh_auto_test:
+	LC_ALL=C.UTF-8 MESON_TESTTHREADS=${AVAILABLE_CORE}  meson test -t $(test_timeout_multiplier) -C obj-*
+
+override_dh_missing:
+ifeq ("enabled","$(LIBCAMERA)")
+	dh_missing --fail-missing
+else
+	dh_missing --list-missing
+endif
+
+override_dh_makeshlibs:
+	dh_makeshlibs \
+		--exclude=/usr/lib/$(DEB_HOST_MULTIARCH)/gstreamer-1.0 \
+		--exclude=/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-0.3 \
+		--exclude=/usr/lib/$(DEB_HOST_MULTIARCH)/spa-0.2 \
+		-- -c4
+
+override_dh_shlibdeps-arch:
+	dh_shlibdeps \
+		-ppipewire-jack \
+		-l/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-0.3 \
+		-- \
+		-Ldebian/pipewire-jack.shlibs.local \
+		$(NULL)
+	dh_shlibdeps \
+		--remaining-packages \
+		-l/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-0.3 \
+		$(NULL)

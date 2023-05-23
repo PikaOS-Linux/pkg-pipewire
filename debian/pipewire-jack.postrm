@@ -1,0 +1,15 @@
+#!/bin/sh 
+# pipewire-jack.postrm, runs ldconfig 
+set -e 
+ 
+#DEBHELPER#
+
+case "$1" in 
+       purge|remove) 
+               ldconfig 
+               ;; 
+       *)
+               ;; 
+esac 
+ 
+ 
