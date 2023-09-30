@@ -9,6 +9,7 @@ usr/share/pipewire/pipewire-avb.conf
 usr/share/pipewire/minimal.conf
 lib/udev/rules.d
 usr/bin/pipewire
+usr/bin/pipewire-vulkan
 usr/bin/pipewire-aes67
 usr/bin/pipewire-avb
 usr/bin/pw-cat
