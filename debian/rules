@@ -28,8 +28,10 @@ endif
 
 ifneq (,$(filter s390x hppa m68k powerpc ppc64 sparc64,$(DEB_HOST_ARCH)))
 BLUEZ5_CODEC_LDAC=disabled
+ECHO_CANCEL_WEBRTC=disabled
 else
 BLUEZ5_CODEC_LDAC=enabled
+ECHO_CANCEL_WEBRTC=enabled
 endif
 
 ifneq (,$(filter hppa i386 i686 m68k powerpc sparc64,$(DEB_HOST_ARCH)))
@@ -117,6 +119,7 @@ override_dh_auto_configure:
 		-Dman=enabled \
 		-Dtest=enabled \
 		-Dvideotestsrc=enabled \
+		-Decho-cancel-webrtc=$(ECHO_CANCEL_WEBRTC) \
 		-Dvolume=enabled \
 		-Dvulkan=enabled \
 		-Droc=$(LIBROC) \
