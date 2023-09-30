@@ -1,8 +1,0 @@
-USENETWORK=yes
-OTHERMIRROR="deb [trusted=yes] http://ppa.pika-os.com/ lunar main"
-HOOKDIR="/var/cache/pbuilder/hook.d/"
-APTCACHEHARDLINK=no
-export DEBIAN_FRONTEND="noninteractive"
-#OTHERMIRROR="deb [trusted=yes] https://ppa.pika-os.com/ lunar main"
-
-

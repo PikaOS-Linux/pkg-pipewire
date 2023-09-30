@@ -1,2 +1,5 @@
 Don-t-automatically-start-pipewire-for-root-logins.patch
-ce71b37b58d5e251ae7acda0799f696688df11c2.patch
+Fix_services.patch
+# Recommended patch for 0.3.7X
+805fbd0b34772fbc4d16bb94317706f2c17cdb59.patch
+632f532036d3c69ce0aba89a85dbc3a94af7ad0a.patch

@@ -30,6 +30,9 @@ jobs:
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
         if_key_exists: replace
     
+    - name: Update apt cache
+      run: apt-get update
+
     - name: Build Package
       run: ./main.sh
 

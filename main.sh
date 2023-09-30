@@ -1,11 +1,13 @@
+#! /bin/bash
+
 # Clone Upstream
-git clone https://gitlab.freedesktop.org/pipewire/pipewire.git -b 0.3.71
+git clone https://gitlab.freedesktop.org/pipewire/pipewire.git -b 0.3.80
 cp -rvf ./debian ./pipewire/
 cd ./pipewire
 
-for i in ../patches/*.patch; do patch -Np1 -i $i ;done
+for i in $(cat ../patches/series) ; do echo "Applying Patch: $i" && patch -Np1 -i ../patches/$i || echo "Applying Patch $i Failed!"; done
 
-LOGNAME=root dh_make --createorig -y -l -p pipewire_0.3.71
+LOGNAME=root dh_make --createorig -y -l -p pipewire_0.3.80
 
 # Get build deps
 apt-get build-dep ./ -y
