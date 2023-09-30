@@ -119,7 +119,6 @@ override_dh_auto_configure:
 		-Dman=enabled \
 		-Dtest=enabled \
 		-Dvideotestsrc=enabled \
-		-Decho-cancel-webrtc=$(ECHO_CANCEL_WEBRTC) \
 		-Dvolume=enabled \
 		-Dvulkan=enabled \
 		-Droc=$(LIBROC) \

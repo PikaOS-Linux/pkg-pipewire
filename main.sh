@@ -3,6 +3,7 @@
 # Clone Upstream
 git clone https://gitlab.freedesktop.org/pipewire/pipewire.git -b 0.3.80
 cp -rvf ./debian ./pipewire/
+cp -vf ./meson.build ./pipewire/
 cd ./pipewire
 
 for i in $(cat ../patches/series) ; do echo "Applying Patch: $i" && patch -Np1 -i ../patches/$i || echo "Applying Patch $i Failed!"; done
