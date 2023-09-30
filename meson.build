@@ -375,19 +375,8 @@ summary({'gstreamer-device-provider': gst_dp_found}, bool_yn: true, section: 'Ba
 
 cdata.set('HAVE_GSTREAMER_DEVICE_PROVIDER', get_option('gstreamer-device-provider').allowed())
 
-webrtc_dep = dependency('webrtc-audio-processing-1',
-  version : ['>= 1.2' ],
-  required : false)
-cdata.set('HAVE_WEBRTC1', webrtc_dep.found())
-if webrtc_dep.found()
-  summary({'WebRTC Echo Canceling >= 1.2': webrtc_dep.found()}, bool_yn: true, section: 'Misc dependencies')
-else
-  webrtc_dep = dependency('webrtc-audio-processing-1',
-    version : ['>= 0.2', '< 1.0'],
-    required : get_option('echo-cancel-webrtc'))
-  cdata.set('HAVE_WEBRTC', webrtc_dep.found())
-  summary({'WebRTC Echo Canceling < 1.0': webrtc_dep.found()}, bool_yn: true, section: 'Misc dependencies')
-endif
+webrtc_dep  = dependency('webrtc-audio-processing-1', required : false
+summary({'WebRTC Echo Canceling': webrtc_dep.found()}, bool_yn: true)
 
 # On FreeBSD and MidnightBSD, epoll-shim library is required for eventfd() and timerfd()
 epoll_shim_dep = (host_machine.system() == 'freebsd' or host_machine.system() == 'midnightbsd'
