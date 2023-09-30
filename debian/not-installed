@@ -4,4 +4,5 @@ usr/share/pipewire/pipewire-pulse.conf.avail/20-upmix.conf
 usr/share/pipewire/pipewire.conf.avail/10-rates.conf
 usr/share/pipewire/pipewire.conf.avail/20-upmix.conf
 usr/include/absl
-usr/include/webrtc-audio-processing-1
+usr/include/webrtc-audio-processing-*
+usr/lib/*/libwebrtc-audio-coding-*.so*
