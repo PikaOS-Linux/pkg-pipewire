@@ -375,7 +375,7 @@ summary({'gstreamer-device-provider': gst_dp_found}, bool_yn: true, section: 'Ba
 
 cdata.set('HAVE_GSTREAMER_DEVICE_PROVIDER', get_option('gstreamer-device-provider').allowed())
 
-webrtc_dep  = dependency('webrtc-audio-processing-1', required : false
+webrtc_dep = dependency('webrtc-audio-processing-1', required : false
 summary({'WebRTC Echo Canceling': webrtc_dep.found()}, bool_yn: true)
 
 # On FreeBSD and MidnightBSD, epoll-shim library is required for eventfd() and timerfd()
