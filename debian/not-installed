@@ -6,3 +6,5 @@ usr/share/pipewire/pipewire.conf.avail/20-upmix.conf
 usr/include/absl
 usr/include/webrtc-audio-processing-*
 usr/lib/*/libwebrtc-audio-coding-*.so*
+usr/lib/*/libwebrtc-audio-processing-*.so*
+usr/lib/*/pkgconfig/webrtc-audio-coding-*.pc*
