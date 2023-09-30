@@ -7,6 +7,8 @@ usr/share/pipewire/pipewire.conf
 usr/share/pipewire/pipewire-aes67.conf
 usr/share/pipewire/pipewire-avb.conf
 usr/share/pipewire/minimal.conf
+usr/lib/x86_64-linux-gnu/pipewire-0.3/libpipewire-module-roc-sink.so
+usr/lib/x86_64-linux-gnu/pipewire-0.3/libpipewire-module-roc-source.so
 lib/udev/rules.d
 usr/bin/pipewire
 usr/bin/pipewire-vulkan
@@ -46,3 +48,4 @@ usr/share/man/man1/pw-profiler.*
 usr/share/man/man1/pw-top.*
 usr/share/man/man5
 etc/security/limits.d/25-pw-rlimits.conf
+usr/share/pipewire/pipewire-vulkan.conf
