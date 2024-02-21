@@ -37,5 +37,5 @@ EOF
 
 # Deliberately word-splitting pkg-config's output:
 # shellcheck disable=SC2046
-"${CROSS_COMPILE}gcc" -otrivial trivial.c -lm $("${CROSS_COMPILE}pkg-config" --cflags --libs libpipewire-0.3)
+"${CROSS_COMPILE}gcc" -otrivial trivial.c -lm $("${CROSS_COMPILE}pkg-config" --cflags --libs libpipewire-1.0)
 ./trivial

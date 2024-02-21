@@ -68,7 +68,7 @@ Vcs-Browser: https://gitlab.freedesktop.org/pipewire/pipewire
 Vcs-Git: https://gitlab.freedesktop.org/pipewire/pipewire.git
 Homepage: https://pipewire.org/
 
-Package: libpipewire-0.3-0
+Package: libpipewire-1.0-0
 Architecture: linux-any
 Multi-Arch: same
 Depends: libspa-0.2-modules (= ${binary:Version}),
@@ -90,9 +90,9 @@ Architecture: all
 Multi-Arch: foreign
 Depends: pipewire, 
 		 ${misc:Depends}
-Provides: libpipewire-0.3-common
-Conflicts: libpipewire-0.3-common
-Replaces: libpipewire-0.3-common
+Provides: libpipewire-1.0-common
+Conflicts: libpipewire-1.0-common
+Replaces: libpipewire-1.0-common
 Description: locales for the PipeWire multimedia server - localization
  PipeWire is a server and user space API to deal with multimedia
  pipelines. This includes:
@@ -104,11 +104,11 @@ Description: locales for the PipeWire multimedia server - localization
  .
  This package contains the locales for pipewire.
 
-Package: libpipewire-0.3-dev
+Package: libpipewire-1.0-dev
 Section: libdevel
 Architecture: linux-any
 Multi-Arch: same
-Depends: libpipewire-0.3-0 (= ${binary:Version}),
+Depends: libpipewire-1.0-0 (= ${binary:Version}),
          libspa-0.2-dev (= ${binary:Version}),
          ${misc:Depends}
 Suggests: pipewire-doc
@@ -123,7 +123,7 @@ Description: libraries for the PipeWire multimedia server - development
  .
  This package contains the development files.
 
-Package: libpipewire-0.3-modules
+Package: libpipewire-1.0-modules
 Architecture: linux-any
 Multi-Arch: same
 Depends: ${misc:Depends}, ${shlibs:Depends}
@@ -203,7 +203,7 @@ Package: pipewire
 Section: video
 Architecture: linux-any
 Multi-Arch: same
-Depends: libpipewire-0.3-modules (= ${binary:Version}),
+Depends: libpipewire-1.0-modules (= ${binary:Version}),
          pipewire-bin (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends},
@@ -226,7 +226,7 @@ Package: pipewire-bin
 Section: video
 Architecture: linux-any
 Multi-Arch: foreign
-Depends: libpipewire-0.3-modules (= ${binary:Version}),
+Depends: libpipewire-1.0-modules (= ${binary:Version}),
          pipewire-pulse,
          ${misc:Depends},
          ${shlibs:Depends}
@@ -274,9 +274,9 @@ Architecture: linux-any
 Multi-Arch: same
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Breaks: pipewire (<< 0.3.5),
-        libpipewire-0.3-modules (<< 0.3.50),
+        libpipewire-1.0-modules (<< 0.3.50),
 Replaces: pipewire (<< 0.3.5),
-         libpipewire-0.3-modules (<< 0.3.50),
+         libpipewire-1.0-modules (<< 0.3.50),
 Description: libraries for the PipeWire multimedia server - modules
  PipeWire is a server and user space API to deal with multimedia
  pipelines. This includes:
@@ -335,9 +335,9 @@ Section: video
 Architecture: linux-any
 Multi-Arch: same
 Replaces: pipewire-bin (<< 0.3.57),
-          libpipewire-0.3-modules (<< 0.3.57)
+          libpipewire-1.0-modules (<< 0.3.57)
 Breaks: pipewire-bin (<< 0.3.57),
-        libpipewire-0.3-modules (<< 0.3.57)
+        libpipewire-1.0-modules (<< 0.3.57)
 Depends: pipewire (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}

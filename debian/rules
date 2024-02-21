@@ -36,7 +36,7 @@ endif
 
 ifneq (,$(filter hppa i386 i686 m68k powerpc sparc64,$(DEB_HOST_ARCH)))
 LIBROC=disabled
-cmnt_libroc=$(shell sed -e '/module-roc-s/ s/^\#*/\#/' -i debian/libpipewire-0.3-modules.install)
+cmnt_libroc=$(shell sed -e '/module-roc-s/ s/^\#*/\#/' -i debian/libpipewire-1.0-modules.install)
 else
 LIBROC=enabled
 endif
@@ -65,7 +65,7 @@ endif
 ifneq (,$(filter ${VERSION_CODENAME},${ROC_NON_SUPPORTED_VERSION_CODENAME}))
 ifneq (,$(filter arm64,$(DEB_HOST_ARCH)))
 LIBROC=disabled
-cmnt_libroc=$(shell sed -e '/module-roc-s/ s/^\#*/\#/' -i debian/libpipewire-0.3-modules.install)
+cmnt_libroc=$(shell sed -e '/module-roc-s/ s/^\#*/\#/' -i debian/libpipewire-1.0-modules.install)
 endif
 endif
 
@@ -125,7 +125,7 @@ override_dh_auto_configure:
 		-Dsession-managers= \
 		$(NULL) 
 	install -d debian/ld.so.conf.d
-	echo "/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-0.3/jack/" > debian/ld.so.conf.d/pipewire-jack-$(DEB_HOST_MULTIARCH).conf
+	echo "/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-1.0/jack/" > debian/ld.so.conf.d/pipewire-jack-$(DEB_HOST_MULTIARCH).conf
 	install -Dm644 /dev/null debian/with-alsa
 	echo -e "\nCommenting out Disabled feature not to be installed...$(cmnt_libcam) $(cmnt_libroc)\n"
 
@@ -155,18 +155,18 @@ endif
 override_dh_makeshlibs:
 	dh_makeshlibs \
 		--exclude=/usr/lib/$(DEB_HOST_MULTIARCH)/gstreamer-1.0 \
-		--exclude=/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-0.3 \
+		--exclude=/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-1.0 \
 		--exclude=/usr/lib/$(DEB_HOST_MULTIARCH)/spa-0.2 \
 		-- -c4
 
 override_dh_shlibdeps-arch:
 	dh_shlibdeps \
 		-ppipewire-jack \
-		-l/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-0.3 \
+		-l/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-1.0 \
 		-- \
 		-Ldebian/pipewire-jack.shlibs.local \
 		$(NULL)
 	dh_shlibdeps \
 		--remaining-packages \
-		-l/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-0.3 \
+		-l/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-1.0 \
 		$(NULL)
