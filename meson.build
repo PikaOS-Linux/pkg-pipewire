@@ -1,5 +1,5 @@
 project('pipewire', ['c' ],
-  version : '0.3.80',
+  version : '1.0.0',
   license : [ 'MIT', 'LGPL-2.1-or-later', 'GPL-2.0-only' ],
   meson_version : '>= 0.61.1',
   default_options : [ 'warning_level=3',
@@ -21,7 +21,7 @@ else
 endif
 
 spaversion = '0.2'
-apiversion = '0.3'
+apiversion = '1.0'
 soversion = 0
 libversion = '@0@.@1@.0'.format(soversion, pipewire_version_minor.to_int() * 100 + pipewire_version_micro.to_int())
 
@@ -57,7 +57,7 @@ if cc.has_header('features.h') and cc.get_define('__GLIBC__', prefix: '#include 
   # like lib, lib64 or lib/x86_64-linux-gnu.
   # This allows the same pw-jack script to work for both 32- and 64-bit
   # applications on biarch/multiarch distributions, by setting something
-  # like LD_LIBRARY_PATH='/usr/${LIB}/pipewire-0.3/jack'.
+  # like LD_LIBRARY_PATH='/usr/${LIB}/pipewire-1.0/jack'.
   # Note that ${LIB} is a special token expanded by the runtime linker,
   # not an environment variable, and must be passed through literally.
   modules_install_dir_dlopen = prefix / '${LIB}' / pipewire_name

@@ -1,4 +1,10 @@
-pipewire (0.3.80-100pika2) pikauwu; urgency=medium
+pipewire (1.0.0-100pika1) pikauwu; urgency=low
+
+  * pikauwu
+
+ -- Sourav Das <root@cybik.moe>  Sat, 20 May 2023 17:34:00 -0800
+
+pipewire (0.3.8-100pika2) pikauwu; urgency=medium
 
   * pikauwu
 

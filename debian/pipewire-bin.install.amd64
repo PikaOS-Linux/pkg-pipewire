@@ -7,8 +7,8 @@ usr/share/pipewire/pipewire.conf
 usr/share/pipewire/pipewire-aes67.conf
 usr/share/pipewire/pipewire-avb.conf
 usr/share/pipewire/minimal.conf
-usr/lib/*/pipewire-0.3/libpipewire-module-roc-sink.so
-usr/lib/*/pipewire-0.3/libpipewire-module-roc-source.so
+usr/lib/*/pipewire-1.0/libpipewire-module-roc-sink.so
+usr/lib/*/pipewire-1.0/libpipewire-module-roc-source.so
 lib/udev/rules.d
 usr/bin/pipewire
 usr/bin/pipewire-vulkan

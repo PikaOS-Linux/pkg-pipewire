@@ -5,6 +5,6 @@ Tests: gstreamer1.0-pipewire
 Restrictions: allow-stderr, superficial
 Depends: gstreamer1.0-pipewire, gstreamer1.0-tools
 
-Tests: libpipewire-0.3-dev
+Tests: libpipewire-1.0-dev
 Restrictions: allow-stderr, superficial
-Depends: build-essential, libpipewire-0.3-dev, pkg-config
+Depends: build-essential, libpipewire-1.0-dev, pkg-config
