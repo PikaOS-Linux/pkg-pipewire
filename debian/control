@@ -11,6 +11,7 @@ Build-Depends: debhelper-compat (= 13),
                libapparmor-dev [linux-any],
                libroc-dev,
                libasound2-dev,
+               libfdk-aac-dev,
                libavahi-client-dev,
                libbluetooth-dev [linux-any],
                libcamera-dev (>= 0.2.0) [!m68k !hurd-any],
@@ -47,7 +48,6 @@ Build-Depends: debhelper-compat (= 13),
                pkgconf,
                python3-docutils,
                systemd-dev
-Build-Conflicts: libfdk-aac-dev
 Standards-Version: 4.6.2
 Vcs-Browser: https://salsa.debian.org/utopia-team/pipewire
 Vcs-Git: https://salsa.debian.org/utopia-team/pipewire.git
