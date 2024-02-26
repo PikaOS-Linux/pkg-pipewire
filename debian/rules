@@ -127,6 +127,7 @@ override_dh_auto_configure:
 		-Ddocs=$(DOCS) \
 		-Dffmpeg=disabled \
 		-Dinstalled_tests=$(INSTTEST) \
+		-Dselinux=disabled
 		-Dlv2=$(LV2) \
 		-Dman=enabled \
 		-Droc=disabled \
