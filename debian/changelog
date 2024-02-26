@@ -1,4 +1,4 @@
-pipewire (1.0.3-1ubuntu2) noble; urgency=medium
+pipewire (1.0.3-100pika1) pikauwu; urgency=medium
 
   [ Sergio Costas Rodriguez ]
   * Add patch to fix audio when snap itself is installed as a deb

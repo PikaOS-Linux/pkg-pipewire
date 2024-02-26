@@ -6,6 +6,13 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,-z,defs
 %:
 	dh $@
 
+VERSION_CODENAME=$(shell sed -ne '/VERSION_CODENAME/p' /etc/os-release | cut -d"=" -f2)
+
+LTO_NON_SUPPORTED_VERSION_CODENAME=focal bionic
+ROC_NON_SUPPORTED_VERSION_CODENAME=kinetic
+LIBLC3_NON_SUPPORTED_VERSION_CODENAME=focal bionic
+COMPRESS_OFFLOAD_NON_SUPPORTED_VERSION_CODENAME=focal bionic
+
 ifneq ($(filter nodoc,$(DEB_BUILD_PROFILES)),)
 DOCS=disabled
 else
@@ -22,18 +29,6 @@ INSTTEST=disabled
 SDL2=disabled
 endif
 
-ifneq (,$(filter s390x hppa m68k powerpc ppc64 sparc64,$(DEB_HOST_ARCH)))
-BLUEZ5_CODEC_LDAC=disabled
-else
-BLUEZ5_CODEC_LDAC=enabled
-endif
-
-ifneq (,$(filter m68k hurd-amd64 hurd-i386,$(DEB_HOST_ARCH)))
-LIBCAMERA=disabled
-else
-LIBCAMERA=enabled
-endif
-
 # lilv and some of its dependencies are in universe
 ifeq (yes,$(shell dpkg-vendor --derives-from Ubuntu && echo yes))
 LV2=disabled
@@ -45,15 +40,81 @@ LIBMYSOFA=enabled
 LIBFFADO=enabled
 endif
 
-ifneq (,$(filter hurd-amd64 hurd-i386,$(DEB_HOST_ARCH)))
-SNAP=disabled
-UDEVRULESDIR=
+ifneq (,$(filter s390x hppa i386 i686 m68k powerpc ppc64 ppc64el sparc64,$(DEB_HOST_ARCH)))
+LIBCAMERA=disabled
+cmnt_libcam=$(shell sed -e '/libcamera/ s/^\#*/\#/' -i debian/pipewire-libcamera.install)
 else
-export UDEVRULESDIR=/usr/lib/udev/rules.d
-SNAP=enabled
-# For pre-Trixie releases udev rules should go in:
-# export UDEVRULESDIR=/lib/udev/rules.d
+LIBCAMERA=enabled
 endif
+
+ifneq (,$(filter s390x hppa m68k powerpc ppc64 sparc64,$(DEB_HOST_ARCH)))
+BLUEZ5_CODEC_LDAC=disabled
+ECHO_CANCEL_WEBRTC=disabled
+else
+BLUEZ5_CODEC_LDAC=enabled
+ECHO_CANCEL_WEBRTC=enabled
+endif
+
+ifneq (,$(filter hppa i386 i686 m68k powerpc sparc64,$(DEB_HOST_ARCH)))
+LIBROC=disabled
+cmnt_libroc=$(shell sed -e '/module-roc-s/ s/^\#*/\#/' -i debian/libpipewire-0.3-modules.install)
+else
+LIBROC=enabled
+endif
+
+ifneq (,$(filter hppa i386 i686 m68k powerpc sparc64,$(DEB_HOST_ARCH)))
+BLUEZ5_CODEC_APTX=disabled
+else
+BLUEZ5_CODEC_APTX=enabled
+endif
+
+ifneq (,$(filter hppa i386 i686 m68k powerpc sparc64,$(DEB_HOST_ARCH)))
+BLUEZ5_CODEC_AAC=disabled
+else
+BLUEZ5_CODEC_AAC=enabled
+endif
+
+
+LTO=true
+
+ifneq (,$(filter armhf,$(DEB_HOST_ARCH)))
+ifneq (,$(filter ${VERSION_CODENAME},${LTO_NON_SUPPORTED_VERSION_CODENAME}))
+LTO=false
+endif
+endif
+
+ifneq (,$(filter ${VERSION_CODENAME},${ROC_NON_SUPPORTED_VERSION_CODENAME}))
+ifneq (,$(filter arm64,$(DEB_HOST_ARCH)))
+LIBROC=disabled
+cmnt_libroc=$(shell sed -e '/module-roc-s/ s/^\#*/\#/' -i debian/libpipewire-0.3-modules.install)
+endif
+endif
+
+BLUEZ5_CODEC_LC3=enabled
+
+ifneq (,$(filter ${VERSION_CODENAME},${LIBLC3_NON_SUPPORTED_VERSION_CODENAME}))
+ifneq (,$(filter armhf,$(DEB_HOST_ARCH)))
+BLUEZ5_CODEC_LC3=disabled
+endif
+endif
+
+ifneq (,$(filter jammy kinetic,${VERSION_CODENAME}))
+ifneq (,$(filter i386,$(DEB_HOST_ARCH)))
+BLUEZ5_CODEC_LC3=disabled
+endif
+endif
+
+COMPRESS_OFFLOAD=enabled
+ifneq (,$(filter ${VERSION_CODENAME},${COMPRESS_OFFLOAD_NON_SUPPORTED_VERSION_CODENAME}))
+COMPRESS_OFFLOAD=disabled
+endif
+ifneq (,$(filter jammy kinetic,${VERSION_CODENAME}))
+ifneq (,$(filter i386,$(DEB_HOST_ARCH)))
+COMPRESS_OFFLOAD=disabled
+endif
+endif
+
+VULKAN=enabled
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
@@ -61,10 +122,10 @@ override_dh_auto_configure:
 		-Dauto_features=enabled \
 		-Davahi=enabled \
 		-Dbluez5-backend-native-mm=enabled \
-		-Dbluez5-codec-aac=disabled \
-		-Dbluez5-codec-aptx=enabled \
-		-Dbluez5-codec-lc3=enabled \
-		-Dbluez5-codec-lc3plus=disabled \
+		-Dbluez5-codec-aac=$(BLUEZ5_CODEC_AAC) \
+		-Dbluez5-codec-aptx=$(BLUEZ5_CODEC_APTX) \
+		-Dbluez5-codec-lc3=$(BLUEZ5_CODEC_LC3) \
+		-Dbluez5-codec-lc3plus=$(BLUEZ5_CODEC_LC3) \
 		-Dbluez5-codec-ldac=$(BLUEZ5_CODEC_LDAC) \
 		-Dbluez5-codec-opus=enabled \
 		-Dlibcamera=$(LIBCAMERA) \
@@ -78,11 +139,11 @@ override_dh_auto_configure:
 		-Droc=disabled \
 		-Dsdl2=$(SDL2) \
 		-Dsession-managers= \
-		-Dsnap=$(SNAP) \
 		-Dtest=enabled \
 		-Dudevrulesdir=$(UDEVRULESDIR) \
 		-Dvideotestsrc=enabled \
-		-Dvulkan=disabled \
+		-Droc=$(LIBROC) \
+		-Dvulkan=$(VULKAN) \
 		$(NULL)
 	install -d debian/ld.so.conf.d
 	echo "/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-0.3/jack/" > "debian/ld.so.conf.d/pipewire-jack-$(DEB_HOST_MULTIARCH).conf"
