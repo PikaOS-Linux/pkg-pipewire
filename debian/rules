@@ -83,13 +83,6 @@ LTO=false
 endif
 endif
 
-ifneq (,$(filter ${VERSION_CODENAME},${ROC_NON_SUPPORTED_VERSION_CODENAME}))
-ifneq (,$(filter arm64,$(DEB_HOST_ARCH)))
-LIBROC=disabled
-cmnt_libroc=$(shell sed -e '/module-roc-s/ s/^\#*/\#/' -i debian/libpipewire-0.3-modules.install)
-endif
-endif
-
 BLUEZ5_CODEC_LC3=enabled
 
 ifneq (,$(filter ${VERSION_CODENAME},${LIBLC3_NON_SUPPORTED_VERSION_CODENAME}))
@@ -125,7 +118,7 @@ override_dh_auto_configure:
 		-Dbluez5-codec-aac=$(BLUEZ5_CODEC_AAC) \
 		-Dbluez5-codec-aptx=$(BLUEZ5_CODEC_APTX) \
 		-Dbluez5-codec-lc3=$(BLUEZ5_CODEC_LC3) \
-		-Dbluez5-codec-lc3plus=$(BLUEZ5_CODEC_LC3) \
+		-Dbluez5-codec-lc3plus=disabled \
 		-Dbluez5-codec-ldac=$(BLUEZ5_CODEC_LDAC) \
 		-Dbluez5-codec-opus=enabled \
 		-Dlibcamera=$(LIBCAMERA) \
