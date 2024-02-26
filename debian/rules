@@ -67,13 +67,14 @@ override_dh_auto_configure:
 		-Dbluez5-codec-opus=enabled \
 		-Dlibcamera=$(LIBCAMERA) \
 		-Dlibffado=$(LIBFFADO) \
+                -Dselinux=disabled
 		-Dlibmysofa=$(LIBMYSOFA) \
 		-Ddocs=$(DOCS) \
 		-Dffmpeg=disabled \
 		-Dinstalled_tests=$(INSTTEST) \
 		-Dlv2=$(LV2) \
 		-Dman=enabled \
-		-Droc=enabled \
+		-Droc=disabled \
 		-Dsdl2=$(SDL2) \
 		-Dsession-managers= \
 		-Dtest=enabled \
