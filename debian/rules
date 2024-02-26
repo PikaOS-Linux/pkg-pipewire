@@ -135,6 +135,7 @@ override_dh_auto_configure:
 		-Dsession-managers= \
 		-Dtest=enabled \
 		-Dudevrulesdir=$(UDEVRULESDIR) \
+		--wrap-mode=default \
 		-Dvideotestsrc=enabled \
 		-Droc=$(LIBROC) \
 		-Dvulkan=$(VULKAN) \
