@@ -74,7 +74,7 @@ override_dh_auto_configure:
 		-Dinstalled_tests=$(INSTTEST) \
 		-Dlv2=$(LV2) \
 		-Dman=enabled \
-		-Droc=disabled \
+		-Droc=enabled \
 		-Dsdl2=$(SDL2) \
 		-Dsession-managers= \
 		-Dtest=enabled \
