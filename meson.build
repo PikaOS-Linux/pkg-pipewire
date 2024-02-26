@@ -65,6 +65,9 @@ else
   modules_install_dir_dlopen = modules_install_dir
 endif
 
+libintl_dep = dependency('intl', required: false)
+summary({'intl support': libintl_dep.found()}, bool_yn: true)
+
 spa_plugindir = pipewire_libdir / spa_name
 spa_datadir = pipewire_datadir / spa_name
 
