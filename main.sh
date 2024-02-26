@@ -9,7 +9,7 @@ cd ./pipewire
 for i in $(cat ../patches/series) ; do echo "Applying Patch: $i" && patch -Np1 -i ../patches/$i || echo "Applying Patch $i Failed!"; done
 
 LOGNAME=root dh_make --createorig -y -l -p pipewire_1.0.3
-
+apt-get libfdk-aac-dev -y
 # Get build deps
 apt-get build-dep ./ -y
 
