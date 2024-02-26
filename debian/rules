@@ -78,7 +78,7 @@ override_dh_auto_configure:
 		-Dman=enabled \
 		-Droc=enabled \
 		-Dsdl2=$(SDL2) \
-		-Dtest=disabled \
+		-Dtest=enabled \
 		-Dudevrulesdir=$(UDEVRULESDIR) \
 		-Dvideotestsrc=enabled \
 		-Dvulkan=enabled \
