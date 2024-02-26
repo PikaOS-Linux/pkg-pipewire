@@ -140,7 +140,7 @@ override_dh_auto_configure:
 		-Dudevrulesdir=$(UDEVRULESDIR) \
 		--wrap-mode=enabled \
 		-Dvideotestsrc=enabled \
-		-Droc=$(LIBROC) \
+		-Droc=disabled \
 		-Dvulkan=$(VULKAN) \
 		$(NULL)
 	install -d debian/ld.so.conf.d
