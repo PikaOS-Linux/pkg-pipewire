@@ -50,7 +50,7 @@ SNAP=disabled
 UDEVRULESDIR=
 else
 export UDEVRULESDIR=/usr/lib/udev/rules.d
-SNAP=enabled
+SNAP=disabled
 # For pre-Trixie releases udev rules should go in:
 # export UDEVRULESDIR=/lib/udev/rules.d
 endif
@@ -61,7 +61,7 @@ override_dh_auto_configure:
 		-Dauto_features=enabled \
 		-Davahi=enabled \
 		-Dbluez5-backend-native-mm=enabled \
-		-Dbluez5-codec-aac=disabled \
+		-Dbluez5-codec-aac=enabled \
 		-Dbluez5-codec-aptx=enabled \
 		-Dbluez5-codec-lc3=enabled \
 		-Dbluez5-codec-lc3plus=disabled \
@@ -82,7 +82,7 @@ override_dh_auto_configure:
 		-Dtest=enabled \
 		-Dudevrulesdir=$(UDEVRULESDIR) \
 		-Dvideotestsrc=enabled \
-		-Dvulkan=disabled \
+		-Dvulkan=enabled \
 		$(NULL)
 	install -d debian/ld.so.conf.d
 	echo "/usr/lib/$(DEB_HOST_MULTIARCH)/pipewire-0.3/jack/" > "debian/ld.so.conf.d/pipewire-jack-$(DEB_HOST_MULTIARCH).conf"
