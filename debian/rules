@@ -64,6 +64,7 @@ override_dh_auto_configure:
 		-Dbluez5-codec-aptx=enabled \
 		-Dbluez5-codec-lc3=enabled \
 		-Dbluez5-codec-lc3plus=disabled \
+		-Dsession-managers= \
 		-Dbluez5-codec-ldac=$(BLUEZ5_CODEC_LDAC) \
 		-Dbluez5-codec-opus=enabled \
 		-Dlibcamera=$(LIBCAMERA) \
@@ -77,8 +78,6 @@ override_dh_auto_configure:
 		-Dman=enabled \
 		-Droc=enabled \
 		-Dsdl2=$(SDL2) \
-		-Dsession-managers=none \
-                -Dwireplumber=disabled \
 		-Dtest=disabled \
 		-Dudevrulesdir=$(UDEVRULESDIR) \
 		-Dvideotestsrc=enabled \
