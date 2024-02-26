@@ -91,9 +91,12 @@ BLUEZ5_CODEC_LC3=disabled
 endif
 endif
 
+LIBROC=enabled
+
 ifneq (,$(filter jammy kinetic,${VERSION_CODENAME}))
 ifneq (,$(filter i386,$(DEB_HOST_ARCH)))
 BLUEZ5_CODEC_LC3=disabled
+LIBROC=disabled
 endif
 endif
 
@@ -135,7 +138,7 @@ override_dh_auto_configure:
 		-Dsession-managers= \
 		-Dtest=enabled \
 		-Dudevrulesdir=$(UDEVRULESDIR) \
-		--wrap-mode=default \
+		--wrap-mode=enabled \
 		-Dvideotestsrc=enabled \
 		-Droc=$(LIBROC) \
 		-Dvulkan=$(VULKAN) \
