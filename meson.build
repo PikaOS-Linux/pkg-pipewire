@@ -402,13 +402,6 @@ libinotify_dep = (host_machine.system() == 'freebsd' or host_machine.system() ==
     ? dependency('libinotify', required: true)
     : dependency('', required: false))
 
-# On FreeBSD and MidnightBSD, libintl library is required for gettext
-libintl_dep = cc.find_library('intl', required: false)
-if not libintl_dep.found()
-    libintl_dep = dependency('intl', required: false)
-endif
-summary({'intl support': libintl_dep.found()}, bool_yn: true)
-
 need_alsa = get_option('pipewire-alsa').enabled() or 'media-session' in get_option('session-managers')
 alsa_dep = dependency('alsa', version : '>=1.1.7', required: need_alsa)
 summary({'pipewire-alsa': alsa_dep.found()}, bool_yn: true)
@@ -456,18 +449,9 @@ installed_tests_execdir = pipewire_libexecdir / 'installed-tests' / pipewire_nam
 installed_tests_enabled = get_option('installed_tests').allowed()
 installed_tests_template = files('template.test.in')
 
-if get_option('tests').allowed()
-  gstack = find_program('gstack', required : false)
-  cdata.set('HAVE_GSTACK', gstack.found())
-endif
-
 subdir('po')
 subdir('spa')
 subdir('src')
-
-if get_option('tests').allowed()
-  subdir('test')
-endif
 
 configure_file(output : 'config.h',
                configuration : cdata)
