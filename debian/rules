@@ -16,7 +16,7 @@ VULKAN_NON_SUPPORTED_VERSION_CODENAME=focal bionic
 
 ############################## Disabling Features Conditionally ##############################
 
-ifneq (,$(filter s390x hppa i386 i686 m68k powerpc ppc64 ppc64el sparc64,$(DEB_HOST_ARCH)))
+ifneq (,$(filter s390x hppa m68k powerpc ppc64 ppc64el sparc64,$(DEB_HOST_ARCH)))
 LIBCAMERA=disabled
 cmnt_libcam=$(shell sed -e '/libcamera/ s/^\#*/\#/' -i debian/pipewire-libcamera.install)
 else
