@@ -480,3 +480,12 @@ Description: transitional package for libspa-0.2-libcamera
  .
  This is a transitional package for libspa-0.2-libcamera.
  It can safely be removed.
+ 
+Package: pipewire-vulkan
+Section: video
+Architecture: linux-any
+Multi-Arch: same
+Depends: pipewire (= ${binary:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: PipeWire vulkan plugin

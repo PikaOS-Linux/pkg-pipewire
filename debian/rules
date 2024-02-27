@@ -116,7 +116,9 @@ override_dh_auto_configure:
 		-Ddocs=enabled \
 		-Dbluez5-backend-native-mm=enabled \
 		-Dexamples=enabled \
+		-Dffmpeg=disabled \
 		-Dinstalled_tests=enabled \
+		-Dlv2=enabled \
 		-Dman=enabled \
 		-Dtest=enabled \
 		-Dvideotestsrc=enabled \
