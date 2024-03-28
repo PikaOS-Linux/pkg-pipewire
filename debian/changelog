@@ -1,3 +1,9 @@
+pipewire (1.0.4-100pika1) pikauwu; urgency=medium
+
+  New upstream release
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Fri, 02 Feb 2024 14:13:35 -0500
+
 pipewire (1.0.3-100pika1) pikauwu; urgency=medium
 
   [ Sergio Costas Rodriguez ]
